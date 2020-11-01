@@ -5,6 +5,7 @@
  */
 package pe.gob.mimp.gobierno.service.impl;
 
+import com.google.gson.Gson;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import pe.gob.mimp.gobierno.converter.GobiernoCast;
 import pe.gob.mimp.gobierno.converter.TipoGobiernoCast;
 import pe.gob.mimp.gobierno.util.Util;
 import pe.gob.mimp.gobierno.service.GobiernoService;
+import pe.gob.mimp.siscap.model.TipoGobierno;
 
 /**
  *
@@ -93,6 +95,14 @@ public class GobiernoServiceImpl implements GobiernoService {
         if (findByParamBean.getParameters() == null) {
             findByParamBean.setParameters(new HashMap<>());
         }
+        
+        findByParamBean.getParameters().forEach((k, v) -> {
+            if ("nidTipoGobierno".equals(k)) {
+                String jsonString = new Gson().toJson(v);
+                TipoGobierno tipoGobierno = new Gson().fromJson(jsonString, TipoGobierno.class);
+                findByParamBean.getParameters().put(k, tipoGobierno);
+            }
+        });
 
         List<Gobierno> gobiernoList = gobiernoRepository.findByParams(findByParamBean.getParameters(), findByParamBean.getOrderBy());
 
