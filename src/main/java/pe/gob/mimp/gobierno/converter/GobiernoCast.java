@@ -29,6 +29,7 @@ public class GobiernoCast {
         gobiernoBean.setTxtPc(gobierno.getTxtPc());
         gobiernoBean.setTxtIp(gobierno.getTxtIp());
         gobiernoBean.setFecEdicion(gobierno.getFecEdicion());
+        gobiernoBean.setNidDistrito(gobierno.getNidDistrito());
         gobiernoBean.setTipoGobiernoBean(TipoGobiernoCast.castTipoGobiernoToTipoGobiernoBean(gobierno.getNidTipoGobierno()));
 
         return gobiernoBean;
@@ -49,6 +50,7 @@ public class GobiernoCast {
         gobierno.setTxtPc(gobiernoBean.getTxtPc());
         gobierno.setTxtIp(gobiernoBean.getTxtIp());
         gobierno.setFecEdicion(gobiernoBean.getFecEdicion());
+        gobierno.setNidDistrito(gobiernoBean.getNidDistrito());
         gobierno.setNidTipoGobierno(TipoGobiernoCast.castTipoGobiernoBeanToTipoGobierno(gobiernoBean.getTipoGobiernoBean()));
 
         return gobierno;

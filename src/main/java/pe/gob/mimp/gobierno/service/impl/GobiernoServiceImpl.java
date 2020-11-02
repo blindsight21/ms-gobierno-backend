@@ -38,17 +38,7 @@ public class GobiernoServiceImpl implements GobiernoService {
     @Override
     public void crearGobierno(GobiernoBean gobiernoBean) throws Exception {
 
-        Gobierno gobierno = new Gobierno();
-        gobierno.setTxtGobierno(gobiernoBean.getTxtGobierno());
-        gobierno.setNidUsuario(gobiernoBean.getNidUsuario());
-        gobierno.setTxtPc(gobiernoBean.getTxtPc());
-        gobierno.setTxtIp(gobiernoBean.getTxtIp());
-        gobierno.setFecEdicion(gobiernoBean.getFecEdicion());
-        gobierno.setFlgActivo(gobiernoBean.getFlgActivo());
-        gobierno.setNidDistrito(gobiernoBean.getNidDistrito());
-
-        gobierno.setNidTipoGobierno(TipoGobiernoCast.castTipoGobiernoBeanToTipoGobierno(gobiernoBean.getTipoGobiernoBean()));
-
+        Gobierno gobierno = GobiernoCast.castGobiernoBeanToGobierno(gobiernoBean);
         gobiernoRepository.save(gobierno);
 
     }
@@ -60,19 +50,7 @@ public class GobiernoServiceImpl implements GobiernoService {
             return;
         }
 
-        Gobierno gobierno = new Gobierno();
-
-        gobierno.setNidGobierno(gobiernoBean.getNidGobierno());
-        gobierno.setTxtGobierno(gobiernoBean.getTxtGobierno());
-        gobierno.setNidUsuario(gobiernoBean.getNidUsuario());
-        gobierno.setTxtPc(gobiernoBean.getTxtPc());
-        gobierno.setTxtIp(gobiernoBean.getTxtIp());
-        gobierno.setFecEdicion(gobiernoBean.getFecEdicion());
-        gobierno.setFlgActivo(gobiernoBean.getFlgActivo());
-        gobierno.setNidDistrito(gobiernoBean.getNidDistrito());
-
-        gobierno.setNidTipoGobierno(TipoGobiernoCast.castTipoGobiernoBeanToTipoGobierno(gobiernoBean.getTipoGobiernoBean()));
-
+        Gobierno gobierno = GobiernoCast.castGobiernoBeanToGobierno(gobiernoBean);;
         gobiernoRepository.save(gobierno);
 
     }
@@ -95,7 +73,7 @@ public class GobiernoServiceImpl implements GobiernoService {
         if (findByParamBean.getParameters() == null) {
             findByParamBean.setParameters(new HashMap<>());
         }
-        
+
         findByParamBean.getParameters().forEach((k, v) -> {
             if ("nidTipoGobierno".equals(k)) {
                 String jsonString = new Gson().toJson(v);
@@ -109,16 +87,7 @@ public class GobiernoServiceImpl implements GobiernoService {
         if (!Util.esListaVacia(gobiernoList)) {
 
             return gobiernoList.stream().map(gobierno -> {
-                GobiernoBean gobiernoBean = new GobiernoBean();
-                gobiernoBean.setNidGobierno(gobierno.getNidGobierno());
-                gobiernoBean.setTxtGobierno(gobierno.getTxtGobierno());
-                gobiernoBean.setNidUsuario(gobierno.getNidUsuario());
-                gobiernoBean.setTxtPc(gobierno.getTxtPc());
-                gobiernoBean.setTxtIp(gobierno.getTxtIp());
-                gobiernoBean.setFecEdicion(gobierno.getFecEdicion());
-                gobiernoBean.setFlgActivo(gobierno.getFlgActivo());
-                gobiernoBean.setNidDistrito(gobierno.getNidDistrito());
-                gobiernoBean.setTipoGobiernoBean(TipoGobiernoCast.castTipoGobiernoToTipoGobiernoBean(gobierno.getNidTipoGobierno()));
+                GobiernoBean gobiernoBean = GobiernoCast.castGobiernoToGobiernoBean(gobierno);
                 return gobiernoBean;
             }).collect(Collectors.toList());
         }
